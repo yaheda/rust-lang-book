@@ -20,6 +20,63 @@ fn main() {
     let some_numer = Option::Some(5);
     let some_string = Some("string");
     let absent_number: Option<i32> = Option::None;
+
+    value_in_cents(Coin::Quarter(USState::Alaska));
+
+    let five = Option::Some(5);
+    let six = plus_one(five);
+    let none = plus_one(Option::None);
+
+    let dice_roll = 9;
+    match dice_roll {
+        3 => add_fancy_hat(),
+        7 => remove_fancy_hat(),
+        num @ 1..=6 => move_player(num),
+        _ => reroll(),
+    }
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(num_spaces: u8) {}
+fn reroll() {}
+
+
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        Option::None => Option::None,
+        Option::Some(i) => Option::Some(i + 1)
+    }
+}
+
+#[derive(Debug)]
+enum USState {
+    Alabama,
+    Alaska,
+}
+
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(USState),
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny =>  {
+            println!("Lucky penny!");
+            1
+        },
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => {
+            println!("State quarter from {:?}!", state);
+            25
+        },
+    }
 }
 
 enum IpAddrKind {
