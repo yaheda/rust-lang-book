@@ -84,6 +84,12 @@ use std::io;
 fn function1() -> fmt::Result { Ok(()) }
 fn function2() -> io::Result<()> { Ok(()) }
 
+use std::cmp::Ordering;
+use std::io;
+
+use std::{ cmp::Ordering, io };
+
+use std::io::{ self, Write }; // use std::io and std::io::Write
 
 #[cfg(test)]
 mod tests {
