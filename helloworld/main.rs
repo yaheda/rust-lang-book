@@ -51,6 +51,8 @@ fn main() {
 
     println!("Hello {} is {number:.prec$}", "x", number=0.01, prec=5);
 
-    
+    println!("{}, `{name:.*}` has 3 fractinal digits", "Hello", 3, name=1234.56);
+    println!("{}, `{name:.*}` has 3 characters", "Hello", 3, name="1234.56");
+    println!("{}, `{name:>8.*}` is 3 right-aligned characters", "Hello", 3, name="1234.56");
 
 }
