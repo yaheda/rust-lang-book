@@ -55,4 +55,27 @@ fn main() {
     println!("{}, `{name:.*}` has 3 characters", "Hello", 3, name="1234.56");
     println!("{}, `{name:>8.*}` is 3 right-aligned characters", "Hello", 3, name="1234.56");
 
+    println!("{:?} months in a year", 12);
+    println!("{1:?} {0:?} is the {actor:?} name.", "Alice", "Bob", actor="main character");
+    println!("{:?} will print", Structure(42));
+    println!("{:?} will print", Deep(Structure(42)));
+
+    let peter = Person {
+        name: String::from("Peter"),
+        age: 27,
+    };
+    println!("{:#?}", peter);
+
+}
+
+#[derive(Debug)]
+struct Structure(i32);
+
+#[derive(Debug)]
+struct Deep(Structure);
+
+#[derive(Debug)]
+struct Person {
+    name: String,
+    age: u8,
 }
