@@ -1,4 +1,4 @@
-use std::fmt;
+use std::fmt::{self, write};
 
 fn main() {
     println!("hello world");
@@ -96,6 +96,9 @@ fn main() {
     println!("Display: {}", complex);
     println!("Debug: {:?}", complex);
 
+    let v = List(vec![1, 2, 3]);
+    println!("{}", v);
+
 }
 
 #[derive(Debug)]
@@ -144,6 +147,26 @@ struct Complex {
 impl fmt::Display for Complex {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} {:+}i", self.real, self.imag)
+    }
+}
+
+struct List(Vec<i32>);
+impl fmt::Display for List {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // `self.0` is the `Vec<i32>` inside the `List` struct
+        let vec = &self.0;
+        write!(f, "[")?;
+
+        // Iterate over `v` in `vec` while enumerating the iteration
+        // index in `index`
+
+        for (index, v) in vec.iter().enumerate() {
+            // For every element except the first, add a comma.
+            if index != 0 { write!(f, ", ")?; }
+            write!(f, "{index}:{}", v)?;
+        }
+
+        write!(f, "]")
     }
 }
 
