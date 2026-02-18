@@ -63,6 +63,46 @@ fn main() {
     let matrix = Matrix(1.1, 1.2, 2.1, 2.2);
     println!("matrix: \n{}", matrix);
     println!("transposed matrix: \n{}", transpose(matrix));
+
+    // arrays and slices
+    let xs: [i32; 5] = [1, 2, 3, 4, 5];
+    let ys: [i32; 500] = [0; 500]; // array of 500 integers initialized to 0
+    println!("first element of the array: {}", xs[0]);
+    println!("number of elements in the array: {}", xs.len());
+    println!("array occupies {} bytes", std::mem::size_of_val(&xs));
+
+    println!("borrow the whole array as a slice");
+    analyze_slice(&xs);
+
+    // Slices can point to a section of an array
+    // They are of the form [starting_index..ending_index]
+    // starting_index is the index of the first element in the slice
+    // ending_index is the index of the first element after the slice
+    println!("borrow a section of the array as a slice");
+    analyze_slice(&xs[1..4]);
+
+    // example of empty slice &[]
+    let an_empty_slice: &[i32] = &[];
+    println!("an empty slice: {:?}", an_empty_slice);
+    assert_eq!(an_empty_slice.len(), 0);
+    assert_eq!(an_empty_slice, &[]); // empty slice is equal to an empty array
+    assert_eq!(an_empty_slice, &[][..]); // same as above
+
+    // arrays can be safely accessed using .get, which returns an Option<&T>
+    // This is because accessing an array with an index that is out of bounds will cause a panic
+    for i in 0..xs.len() + 1 {
+        match xs.get(i) {
+            Some(x) => println!("xs[{}] = {}", i, x),
+            None => println!("xs[{}] is out of bounds", i),
+        }
+    }
+}
+
+use std::mem;
+fn analyze_slice(slice: &[i32]) {
+    println!("first element of the slice: {}", slice[0]);
+    println!("the slice has {} elements", slice.len());
+    println!("the slice occupies {} bytes", mem::size_of_val(slice));
 }
 
 #[derive(Debug)]
