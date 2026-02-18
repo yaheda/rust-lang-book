@@ -61,13 +61,23 @@ fn main() {
     println!("a: {}, b: {}, c: {}, d: {}", a, b, c, d);
 
     let matrix = Matrix(1.1, 1.2, 2.1, 2.2);
-    println!("matrix: {:?}", matrix);
+    println!("matrix: \n{}", matrix);
+    println!("transposed matrix: \n{}", transpose(matrix));
 }
 
 #[derive(Debug)]
 struct Matrix(f32, f32, f32, f32);
+impl std::fmt::Display for Matrix {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "({} {})\n({} {})", self.0, self.1, self.2, self.3)
+    }
+}
 
 fn reverse(pair: (i32, bool)) -> (bool, i32) {
     let (int_part, bool_part) = pair;
     (bool_part, int_part)
+}
+
+fn transpose(matrix: Matrix) -> Matrix {
+    Matrix(matrix.0, matrix.2, matrix.1, matrix.3)
 }
