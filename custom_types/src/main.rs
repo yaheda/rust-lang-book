@@ -35,7 +35,44 @@ fn main() {
     // Deconstructure a tuple struct
     let Pair(integer, decimal) = pair;
     println!("integer: {}, decimal: {}", integer, decimal);
+
+    let area = rect_area(_rectangle);
+    println!("area of rectangle: {}", area);
+
+    let square_point = Point { x: 0.0, y: 0.0 };
+    let square_rect = square(square_point, 5.0);
+    println!("{:?}", square_rect);
 }
+
+fn rect_area(rectangle: Rectangle) -> f32 {
+    let Rectangle { top_left, bottom_right } = rectangle;
+    let width = bottom_right.x - top_left.x;
+    let height = top_left.y - bottom_right.y;
+    width * height
+}
+
+fn square(point: Point, size: f32) -> Rectangle {
+    let Point { x, y } = point;
+    let rectangle = Rectangle {
+        top_left: point,
+        bottom_right: Point {
+            x: x + size,
+            y: y - size
+        }
+    };
+    rectangle
+}
+
+// Add a function square_new which takes a Point and a f32 as arguments, and returns a Rectangle with its top left corner on the point, and a width and height corresponding to the f32
+// fn square_new(point: Point, size: f32) -> Rectangle {
+//     Rectangle {
+//         top_left: point,
+//         bottom_right: Point {
+//             x: point.x + size,
+//             y: point.y - size
+//         }
+//     }
+// }
 
 #[derive(Debug)]
 struct Person {
@@ -47,11 +84,13 @@ struct Unit; // unit struct
 
 struct Pair(i32, f32); // tuple struct
 
+#[derive(Debug)]
 struct Point {
     x: f32,
     y: f32,
 }
 
+#[derive(Debug)]
 struct Rectangle {
     top_left: Point,
     bottom_right: Point,
