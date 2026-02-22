@@ -42,6 +42,108 @@ fn main() {
     let square_point = Point { x: 0.0, y: 0.0 };
     let square_rect = square(square_point, 5.0);
     println!("{:?}", square_rect);
+
+    println!("****************** Enums");
+    let pressed = WebEvent::KeyPress('x');
+    let pasted = WebEvent::Paste("my text".to_owned()); // creates an owned 'String' from a string literal
+    let click = WebEvent::Click { x: 20, y: 80 };
+    let load = WebEvent::PageLoad;
+    let unload = WebEvent::PageUnload;
+
+    inspect(pressed);
+    inspect(pasted);
+    inspect(click);
+    inspect(load);
+    inspect(unload);
+
+    let op = Operations::Add;
+    let result = op.run(1, 2);
+    println!("result: {}", result);
+    op.benzona();
+
+    // Explicitly 'use'
+    use Stage::{ Beginner, Advanced };
+    use Role::*;
+
+    let stage = Beginner; // equivalent to Stage::Beginner
+    let role = Student; // equivalent to Role::Student
+
+    match stage {
+        Beginner => println!("Beginner"),
+        Advanced => println!("Advanced"),
+    }
+
+    match role {
+        Student => println!("Student"),
+        Teacher => println!("Teacher"), 
+    }
+
+    // cast as integers
+    println!("zero is {}", Number::Zero as i32);
+    println!("one is {}", Number::One as i32);
+
+    println!("roses are #{:06x}", Color::Red as u32);
+    println!("violets are #{:06x}", Color::Blue as u32);
+}
+
+enum Number {
+    Zero,
+    One,
+    Two,
+}
+
+enum Color {
+    Red = 0xff0000,
+    Green = 0x00ff00,
+    Blue = 0x0000ff,
+}
+
+enum Stage {
+    Beginner,
+    Advanced,
+}
+
+enum Role {
+    Student,
+    Teacher,
+}
+
+enum VeryVerboseEnumOfThingsToDoWithNumbers {
+    Add,
+    Substract,
+}
+// create a type of alias
+type Operations = VeryVerboseEnumOfThingsToDoWithNumbers;
+
+impl VeryVerboseEnumOfThingsToDoWithNumbers {
+    fn run(&self, x: i32, y: i32) -> i32 {
+        match self {
+            Self::Add => x + y,
+            Self::Substract => x - y,
+        }
+    }
+    fn benzona(&self) {
+        println!("Sharmuta");
+    }
+}
+
+
+enum WebEvent {
+    PageLoad,
+    PageUnload,
+    KeyPress(char),
+    Paste(String),
+    Click { x: i64, y: i64}
+}
+
+fn inspect(event: WebEvent) {
+    match event {
+        WebEvent::PageLoad => println!("Page Loaded"),
+        WebEvent::PageUnload => println!("Page Unloaded"),
+        WebEvent::KeyPress(c) => println!("Key pressed: {}", c),
+        WebEvent::Paste(s) => println!("Pasted something: {}", s),
+        WebEvent::Click { x, y } => println!("Clicked at x={}, y={}", x, y)
+    }
 }
 
 fn rect_area(rectangle: Rectangle) -> f32 {
