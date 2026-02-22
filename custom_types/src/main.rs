@@ -93,10 +93,25 @@ fn main() {
 
     println!("linked list has length: {}", list.len());
     println!("{}", list.strigify());
+
+    let list2 = List::Cons(10, Box::new(List::Cons(20, Box::new(List::Nil))));
+    println!("{}", list2.strigify());
+
+    println!("This is {}", LANGUAGE);
+    println!("The threshold is {}", THRESHOLD);
+    println!("{} is {}", 3, is_big(3));
+}
+
+static LANGUAGE: &str = "Rust";
+const THRESHOLD: i32 = 10;
+
+fn is_big(n: i32) -> bool {
+    n > THRESHOLD
 }
 
 use crate::List::*;
 
+#[derive(Debug)]
 enum List {
     // Cons: Tuple struct that wraps an element and a pointer to the next node
     Cons(u32, Box<List>),
