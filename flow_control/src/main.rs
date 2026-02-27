@@ -138,4 +138,28 @@ fn main() {
     };
     println!("{} converts to {}", boolean, binary);
 
+    println!("********** deconstructuring tuples");
+    let triple = (0, -2, 3);
+    println!("Tell me about {:?}", triple);
+    match triple {
+        (0, y, z) => println!("First is 0, y is {} and z is {}", y, z),
+        (1, ..) => println!("First is 1 and the rest doesn't matter"),
+        (.., 2) => println!("Last is 2 and the rest doesn't matter"),
+        (3, .., 4) => println!("First is 3, last is 4 and the rest doesn't matter"),
+        _ => println!("It doesn't matter what they are"),
+    }
+
+    println!("********** deconstructuring arrays and slices");
+
+    let array = [1, -2, 6];
+    println!("Tell me about {:?}", array);
+    match array {
+        [0, second, third] => println!("First is 0, second is {} and third is {}", second, third),
+        [1, _, _] => println!("First is 1 and the rest doesn't matter"),
+        [1, _, third] => println!("First is 1, third is {} and the rest doesn't matter", third),
+        [-1, second, ..] => println!("First is -1, second is {} and the rest doesn't matter", second),
+        [3, second, tail @ ..] => println!("First is 3, second is {} and the rest is {:?}", second, tail),
+        [first, middle @ .., last] => println!("First is {}, middle is {:?} and last is {}", first, middle, last),
+        _ => println!("It doesn't matter what they are"),
+    }
 }
