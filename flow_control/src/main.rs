@@ -210,6 +210,43 @@ fn main() {
             println!("Got a mutable reference to a value: {}", m);
         },
     }
+
+    println!("********** struts");
+
+    struct Foo {
+        x: (u32, u32),
+        y: u32,
+    }
+
+    // try changing the values in the struct to see what happens.
+    let foo = Foo { x: (3, 2), y: 3 };
+
+    match foo {
+        Foo { x: (1, b), y } => println!("First of x is 1, b is {} and y is {}", b, y),
+
+        // renamed fields
+        Foo { x: (a, 2), y: c } => println!("First of x is {}, second is 2 and y is {}", a, c),
+
+        // ignore some fields
+        Foo { y, .. } => println!("y is {} and the rest doesn't matter", y),
+    }
+
+    // you do not need match to destructure a struct, you can use let bindings as well.
+    let Foo { x: (a, b), y } = foo;
+    println!("a is {}, b is {} and y is {}", a, b, y);
+
+    struct Bar {
+        foo: Foo,
+    }
+
+    let bar = Bar { foo: Foo { x: (1, 2), y: 3 } };
+    let Bar { 
+        foo: Foo { 
+            x: (a, b), 
+            y 
+        } 
+    } = bar;
+    println!("a is {}, b is {} and y is {}", a, b, y);
     
 }
 
