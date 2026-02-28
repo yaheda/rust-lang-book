@@ -1,4 +1,6 @@
-#![allow(unreachable_code, unused_labels)]
+#![allow(unreachable_code, unused_labels, dead_code)]
+
+use std::array;
 
 fn main() {
     println!("********** if/else");
@@ -162,4 +164,35 @@ fn main() {
         [first, middle @ .., last] => println!("First is {}, middle is {:?} and last is {}", first, middle, last),
         _ => println!("It doesn't matter what they are"),
     }
+
+    println!("********** deconstructuring enums");
+
+    let color = Color::RGB(122, 17, 40);
+
+    println!("What color is it?");
+    match color {
+        Color::Red => println!("The color is Red!"),
+        Color::Green => println!("The color is Green!"),
+        Color::Blue => println!("The color is Blue!"),
+        Color::RGB(r, g, b) => println!("The color is RGB({}, {}, {})", r, g, b),
+        Color::HSV(h, s, v) => println!("The color is HSV({}, {}, {})", h, s, v),
+        Color::HSL(h, s, l) => println!("The color is HSL({}, {}, {})", h, s, l),
+        Color::CMY(c, m, y) => println!("The color is CMY({}, {}, {})", c, m, y),
+        Color::CMYK(c, m, y, k) => println!("The color is CMYK({}, {}, {}, {})", c, m, y, k),
+    }
+
+    
 }
+
+enum Color {
+    Red,
+    Green,
+    Blue,
+
+    RGB(u8, u8, u8), // tuple struct variant
+    HSV(u8, u8, u8), // tuple struct variant
+    HSL(u8, u8, u8), // tuple struct variant
+    CMY(u8, u8, u8), // tuple struct variant
+    CMYK(u8, u8, u8, u8), // tuple struct variant
+}
+
