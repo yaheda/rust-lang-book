@@ -181,6 +181,35 @@ fn main() {
         Color::CMYK(c, m, y, k) => println!("The color is CMYK({}, {}, {}, {})", c, m, y, k),
     }
 
+    println!("********** pointers and references in patterns");
+
+    let reference = &4;
+
+    match reference {
+        &value => println!("Got a value via destructuring: {}", value),
+    }
+
+    // to avoid the extra & in the pattern, we can dereference the reference in the match expression itself:
+    match *reference {
+        value => println!("Got a value via dereferencing: {}", value),
+    }
+
+    let _not_a_reference = 3;
+    let ref _is_a_reference = 3; // this is the same as let _is_a_reference = &3;
+
+    let value = 5;
+    let mut mut_value = 6;
+
+    match value {
+        ref r => println!("Got a reference to a value: {}", r),
+    }
+
+    match mut_value {
+        ref mut m => {
+            *m += 10; // we can modify the value through the mutable reference
+            println!("Got a mutable reference to a value: {}", m);
+        },
+    }
     
 }
 
