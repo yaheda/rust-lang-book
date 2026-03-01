@@ -264,7 +264,33 @@ fn main() {
         i if i > 0 => println!("greater than zero"),
         _ => println!("less than zero"), // this case will never be reached because u8 cannot be negative, but we need to include it to make the match expression exhaustive.
     }
+
+    println!("********** match @ bindings");
+
+    println!("Tell me about the person you are");
+    match age() {
+        0 => println!("I haven't celebrated my first birthday yet"),
+        n @ 1..=12 => println!("I'm a child of age {}", n),
+        n @ 13..=19 => println!("I'm a teen of age {}", n),
+        n @ (1 | 7 | 15 | 13) => println!("I'm a teen of age {}", n),
+        n => println!("I'm an old person of age {}", n),
+        
+    }
+
+    match some_number() {
+        Some(n @ 42) => println!("The answer to the Ultimate Question of Life, The Universe, and Everything is {}", n),
+        Some(n) => println!("Just a regular number: {}", n),
+        _ => (),
+    }
     
+}
+
+fn some_number() -> Option<u32> {
+    Some(7)
+}
+
+fn age() -> u32 {
+    15
 }
 
 enum Temperature {
