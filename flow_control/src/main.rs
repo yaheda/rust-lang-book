@@ -181,7 +181,7 @@ fn main() {
         Color::CMYK(c, m, y, k) => println!("The color is CMYK({}, {}, {}, {})", c, m, y, k),
     }
 
-    println!("********** pointers and references in patterns");
+    println!("********** deconstructuring pointers and references in patterns");
 
     let reference = &4;
 
@@ -211,7 +211,7 @@ fn main() {
         },
     }
 
-    println!("********** struts");
+    println!("**********  deconstructuring struts");
 
     struct Foo {
         x: (u32, u32),
@@ -247,7 +247,29 @@ fn main() {
         } 
     } = bar;
     println!("a is {}, b is {} and y is {}", a, b, y);
+
+    println!("**********  match guards");
+
+    let temperature = Temperature::Celsius(35.0);
+    match temperature {
+        Temperature::Celsius(t) if t > 30.0 => println!("It's hot!"),
+        Temperature::Celsius(t) if t < 10.0 => println!("It's cold!"),
+        Temperature::Celsius(t) => println!("It's {} degrees Celsius", t),
+        Temperature::Fahrenheit(t) => println!("It's {} degrees Fahrenheit", t),
+    }
+
+    let number = 4u8;
+    match number {
+        i if i == 0 => println!("zero"),
+        i if i > 0 => println!("greater than zero"),
+        _ => println!("less than zero"), // this case will never be reached because u8 cannot be negative, but we need to include it to make the match expression exhaustive.
+    }
     
+}
+
+enum Temperature {
+    Celsius(f64),
+    Fahrenheit(f64),
 }
 
 enum Color {
