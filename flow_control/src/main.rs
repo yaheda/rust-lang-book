@@ -282,7 +282,103 @@ fn main() {
         Some(n) => println!("Just a regular number: {}", n),
         _ => (),
     }
+
+    println!("********** if let");
+
+    let number = Some(7);
+    let letter: Option<i32> = None;
+    let emoticon: Option<i32> = None;
     
+    // The `if let` construct reads: "if `let` destructures `number` into
+    // `Some(i)`, evaluate the block (`{}`). 
+    if let Some(i) = number {
+        println!("Matched {:?}!", i);
+    }
+
+    if let Some(i) = letter {
+        println!("Matched {:?}!", i);
+    } else {
+        println!("Didn't match a number. Let's go with a letter!");
+    }
+
+    let i_like_letters = false;
+    if let Some(i) = emoticon {
+        println!("Matched {:?}!", i);
+    } else if i_like_letters {
+        println!("Didn't match a number. Let's go with a letter!");
+    } else {
+        println!("Didn't match a number. Let's go with an emoticon!");
+    }
+
+    let a = Foo1::Bar;
+    let b = Foo1::Baz;
+    let c = Foo1::Qux(100);
+
+    if let Foo1::Bar = a {
+        println!("a is foobar");
+    }
+    if let Foo1::Baz = b {
+        println!("b is foobaz");
+    }
+    if let Foo1::Qux(n) = c {
+        println!("c is fooqux with value {}", n);
+    }
+
+    println!("********** let-else");
+
+    assert_eq!(get_count_item("3 chairs"), (3, "chairs"));
+
+    println!("********** while let");
+
+    let mut optional = Some(0);
+
+    loop {
+        match optional {
+            Some(i) => {
+                if i > 9 {
+                    println!("Greater than 9, quit!");
+                    optional = None;
+                } else {
+                    println!("i is {:?}, try again", i);
+                    optional = Some(i + 1);
+                }
+            },
+            _ => break,
+        }
+    }
+
+    optional = Some(0);
+
+    while let Some(i) = optional {
+        if i > 9 {
+            println!("W Greater than 9, quit!");
+            optional = None;
+        } else {
+            println!("W i is {:?}, try again", i);
+            optional = Some(i + 1);
+        }
+    }
+
+
+}
+
+use std::str::FromStr;
+fn get_count_item(s: &str) -> (u64, &str) {
+    let mut it = s.split(' ');
+    let (Some(count_str), Some(item)) = (it.next(), it.next()) else {
+        panic!("Input string is not in the correct format");
+    };
+
+    let Ok(count) = u64::from_str(count_str) else {
+        panic!("Count is not a valid number");
+    };
+    (count, item)
+}
+
+enum Foo1 {
+    Bar,
+    Baz,
+    Qux(u32),
 }
 
 fn some_number() -> Option<u32> {
