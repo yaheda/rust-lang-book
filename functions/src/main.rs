@@ -7,7 +7,26 @@ fn main() {
     println!("Is {} divisible by {}? {}", x, y, is_divible_by(x, y));
 
     println!("******* Methods and Associated Functions *******");
+    let p1 = Point::origin();
+    println!("The origin is at ({}, {})", p1.x, p1.y);
+    let p2 = Point::new(3.0, 4.0);
+    println!("The point is at ({}, {})", p2.x, p2.y); 
+    let rect = Rectangle { width: 3.0, height: 4.0 };
+    println!("The area of the rectangle is {}", rect.area());
 
+    println!("******* Closures *******");
+    let add = |a: i32, b: i32| a + b;
+    println!("The sum of 5 and 10 is {}", add(5, 10));
+
+    let outer_var = 20;
+    let closed_anonoted = |i: i32| -> i32 { i + outer_var };
+    println!("The result of the closure is {}", closed_anonoted(5));
+
+    let closed_inferred = |i: i32| i + outer_var;
+    println!("The result of the closure is {}", closed_inferred(10));
+
+    let one = || 1;
+    println!("The result of the closure is {}", one());
 
 }
 
